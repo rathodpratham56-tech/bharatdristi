@@ -7,6 +7,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Full-page seamless fixed background styling using bg-tech.jpeg */
+        html {
+            min-height: 100%;
+        }
         body {
             background-image: url('./bg-tech.jpeg');
             background-size: cover;
@@ -14,6 +17,7 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
             min-height: 100vh;
+            margin: 0;
         }
 
         @media print {
@@ -80,8 +84,8 @@
     <!-- ========================================================= -->
     <!-- PAGE 1: WELCOME LANDING SCREEN -->
     <!-- ========================================================= -->
-    <div id="pageWelcome" class="min-h-screen flex flex-col items-center justify-center p-6">
-        <div class="bg-slate-950/85 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-cyan-500/30 text-center max-w-xl w-full space-y-6 text-white">
+    <div id="pageWelcome" class="min-h-screen w-full flex flex-col items-center justify-center p-6">
+        <div class="p-8 sm:p-12 text-center max-w-5xl w-full min-h-[70vh] flex flex-col items-center justify-center space-y-6 text-white">
             <img src="./logo.jpeg" alt="Bharatdrishti Logo" onerror="this.src='./logo.jpg'" class="h-28 w-28 object-contain mx-auto rounded-2xl shadow-lg border-2 border-cyan-400 bg-white">
             <div>
                 <h1 class="text-3xl font-black tracking-wider uppercase text-white">Bharatdrishti</h1>
@@ -94,6 +98,20 @@
                 Start Screening Portal ➔
             </button>
         </div>
+        <section class="max-w-5xl w-full mt-8 grid gap-4 md:grid-cols-3 text-left text-white">
+            <div class="bg-slate-950/75 backdrop-blur-md border border-cyan-500/30 rounded-2xl p-5">
+                <h2 class="text-sm font-black uppercase text-cyan-300">AI Methodology</h2>
+                <p class="text-xs text-slate-200 mt-2 leading-relaxed">Image quality check → retinal preprocessing → model prediction → Grad-CAM explainability.</p>
+            </div>
+            <div class="bg-slate-950/75 backdrop-blur-md border border-cyan-500/30 rounded-2xl p-5">
+                <h2 class="text-sm font-black uppercase text-cyan-300">Model Details</h2>
+                <p class="text-xs text-slate-200 mt-2 leading-relaxed">Model: ResNet50. Dataset source, image count, classes, and class distribution: not available in this repository.</p>
+            </div>
+            <div class="bg-slate-950/75 backdrop-blur-md border border-cyan-500/30 rounded-2xl p-5">
+                <h2 class="text-sm font-black uppercase text-cyan-300">Screening Scope</h2>
+                <p class="text-xs text-slate-200 mt-2 leading-relaxed">For screening and research assistance only. Results require professional ophthalmological review.</p>
+            </div>
+        </section>
         <p class="text-cyan-200 font-bold text-[11px] mt-6 drop-shadow">Smart India Hackathon (SIH) 2026 Prototype</p>
     </div>
 
@@ -101,12 +119,12 @@
     <!-- ========================================================= -->
     <!-- PAGE 2: PATIENT REGISTRATION BLOCK -->
     <!-- ========================================================= -->
-    <div id="pageRegistration" class="hidden min-h-screen py-10 px-4 flex flex-col items-center justify-center">
-        <div class="max-w-xl w-full bg-white/95 backdrop-blur-md p-8 rounded-3xl shadow-xl border border-slate-200 space-y-6">
+    <div id="pageRegistration" class="hidden min-h-screen w-full py-10 px-4 flex flex-col items-center justify-center">
+        <div class="max-w-3xl w-full bg-slate-950/75 backdrop-blur-md p-8 sm:p-12 rounded-3xl shadow-xl border border-cyan-500/30 space-y-6 text-white">
             <div class="border-b pb-4 flex justify-between items-center">
                 <div>
                     <span class="text-[10px] font-bold bg-indigo-100 text-indigo-800 px-2.5 py-1 rounded-full uppercase tracking-wider">Patient Registration</span>
-                    <h2 class="text-xl font-black text-slate-900 mt-2 flex items-center">
+                    <h2 class="text-xl font-black text-white mt-2 flex items-center">
                         <span class="mr-2">📋</span> Enter Patient Details
                     </h2>
                 </div>
@@ -115,24 +133,24 @@
 
             <div class="space-y-4">
                 <div>
-                    <label class="text-[11px] font-bold text-slate-700 uppercase">Patient Full Name <span class="text-red-500">*</span></label>
+                    <label class="text-[11px] font-bold text-slate-200 uppercase">Patient Full Name <span class="text-red-400">*</span></label>
                     <input type="text" id="pName" placeholder="Enter patient full name" class="w-full mt-1.5 p-3 bg-white border border-slate-300 rounded-xl text-xs font-medium outline-none focus:ring-2 focus:ring-indigo-500">
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="text-[11px] font-bold text-slate-700 uppercase">Patient ID / UHID</label>
+                        <label class="text-[11px] font-bold text-slate-200 uppercase">Patient ID / UHID</label>
                         <input type="text" id="pId" placeholder="e.g. BD-2026-101" class="w-full mt-1.5 p-3 bg-white border border-slate-300 rounded-xl text-xs font-medium outline-none focus:ring-2 focus:ring-indigo-500">
                     </div>
                     <div>
-                        <label class="text-[11px] font-bold text-slate-700 uppercase">Age</label>
+                        <label class="text-[11px] font-bold text-slate-200 uppercase">Age</label>
                         <input type="number" id="pAge" min="1" max="120" placeholder="Enter age" class="w-full mt-1.5 p-3 bg-white border border-slate-300 rounded-xl text-xs font-medium outline-none focus:ring-2 focus:ring-indigo-500">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="text-[11px] font-bold text-slate-700 uppercase">Gender</label>
+                        <label class="text-[11px] font-bold text-slate-200 uppercase">Gender</label>
                         <select id="pGender" class="w-full mt-1.5 p-3 bg-white border border-slate-300 rounded-xl text-xs font-medium outline-none focus:ring-2 focus:ring-indigo-500">
                             <option value="">Select Gender</option>
                             <option value="Male">Male</option>
@@ -141,7 +159,7 @@
                         </select>
                     </div>
                     <div>
-                        <label class="text-[11px] font-bold text-slate-700 uppercase">Screening Location</label>
+                        <label class="text-[11px] font-bold text-slate-200 uppercase">Screening Location</label>
                         <input type="text" id="pLocation" value="MIT ADT Health Camp, Pune" class="w-full mt-1.5 p-3 bg-white border border-slate-300 rounded-xl text-xs font-medium outline-none focus:ring-2 focus:ring-indigo-500">
                     </div>
                 </div>
@@ -158,12 +176,12 @@
     <!-- ========================================================= -->
     <!-- PAGE 3: UPLOAD FUNDUS IMAGE & RUN AI BLOCK -->
     <!-- ========================================================= -->
-    <div id="pageUpload" class="hidden min-h-screen py-10 px-4 flex flex-col items-center justify-center">
-        <div class="max-w-xl w-full bg-white/95 backdrop-blur-md p-8 rounded-3xl shadow-xl border border-slate-200 space-y-6">
+    <div id="pageUpload" class="hidden min-h-screen w-full py-10 px-4 flex flex-col items-center justify-center">
+        <div class="max-w-3xl w-full bg-slate-950/75 backdrop-blur-md p-8 sm:p-12 rounded-3xl shadow-xl border border-cyan-500/30 space-y-6 text-white">
             <div class="border-b pb-4 flex justify-between items-center">
                 <div>
                     <span class="text-[10px] font-bold bg-cyan-100 text-cyan-800 px-2.5 py-1 rounded-full uppercase tracking-wider">Fundus Acquisition</span>
-                    <h2 class="text-xl font-black text-slate-900 mt-2 flex items-center">
+                    <h2 class="text-xl font-black text-white mt-2 flex items-center">
                         <span class="mr-2">📷</span> UPLOAD FUNDUS IMAGE
                     </h2>
                 </div>
@@ -177,7 +195,7 @@
 
             <div class="space-y-4">
                 <div>
-                    <label class="text-[11px] font-bold text-slate-700 uppercase">Select Retinal Fundus Photograph <span class="text-red-500">*</span></label>
+                    <label class="text-[11px] font-bold text-slate-200 uppercase">Select Retinal Fundus Photograph <span class="text-red-400">*</span></label>
                     <input type="file" id="fundusInput" accept="image/jpeg,image/png,image/jpg,image/webp" class="w-full mt-2 text-xs text-slate-500 file:mr-3 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-indigo-50 file:text-indigo-700 cursor-pointer border border-slate-300 rounded-xl p-2 bg-white" onchange="previewImage(event)">
                 </div>
 
@@ -319,7 +337,16 @@
                             <li>• Screening Recommendation: <span id="resRec" class="font-normal">--</span></li>
                             <li>• Referral Guidance: <span id="resRef" class="font-normal">--</span></li>
                         </ul>
+                        <div class="bg-cyan-50 border border-cyan-300 text-slate-800 p-2.5 rounded font-medium">
+                            Screening interpretation: <span id="screeningInterpretation">--</span>
+                        </div>
                     </div>
+                </div>
+
+                <div class="p-3.5 border-2 border-cyan-700 bg-cyan-50 text-slate-800 text-xs space-y-1">
+                    <p><strong>Model:</strong> <span id="modelVariant">--</span></p>
+                    <p><strong>Preprocessing:</strong> <span id="preprocessingSummary">--</span></p>
+                    <p><strong>Medical disclaimer:</strong> <span id="medicalDisclaimer">This AI system is intended for screening/research assistance and does not replace professional ophthalmological diagnosis.</span></p>
                 </div>
 
                 <!-- Page 1 Footer -->
@@ -387,7 +414,7 @@
                     </div>
 
                     <div class="p-3.5 bg-slate-100 border border-slate-400 rounded-xl text-[10px] text-slate-700 font-medium leading-relaxed">
-                        <strong>Clinical Note on XAI Visualization:</strong> The Grad-CAM heatmap (Fig 3) highlights active lesion regions (microaneurysms, hemorrhages, and exudates) contributing to severity grading. Red/Yellow zones indicate high neural network attention.
+                        <strong>Grad-CAM explanation:</strong> <span id="xaiNote">Highlighted regions indicate areas that contributed most to the model prediction. Grad-CAM does not prove a medical diagnosis.</span>
                     </div>
                 </div>
 
@@ -426,7 +453,8 @@
     <!-- JAVASCRIPT WORKFLOW CONTROLLER -->
     <!-- ========================================================= -->
     <script>
-        const API_BASE_URL = "http://127.0.0.1:8000";
+        const queryApiUrl = new URLSearchParams(window.location.search).get("api");
+        const API_BASE_URL = queryApiUrl || window.__BHARATDRISHTI_API_URL__ || window.location.origin;
         let selectedFile = null;
 
         const nationwideHospitalDatabase = {
@@ -539,7 +567,7 @@
             const formData = new FormData();
             formData.append("file", selectedFile);
             setLoadingState(true);
-            showStatus("Running ResNet50 inference, IQA check, CLAHE & Grad-CAM...", "info");
+            showStatus("Running image quality check, preprocessing, model inference & Grad-CAM...", "info");
 
             try {
                 const response = await fetch(`${API_BASE_URL}/analyze-fundus`, {
@@ -576,6 +604,15 @@
                     document.getElementById("resLesions").innerText = data.prediction?.detected_lesions || "--";
                     document.getElementById("resRec").innerText = data.prediction?.recommendation || "--";
                     document.getElementById("resRef").innerText = data.prediction?.referral || "--";
+                    document.getElementById("screeningInterpretation").innerText = data.prediction?.screening_interpretation || "--";
+                    document.getElementById("modelVariant").innerText = data.model?.name || "--";
+                    document.getElementById("preprocessingSummary").innerText = data.preprocessing?.operations?.join(" → ") || "--";
+                    document.getElementById("medicalDisclaimer").innerText = data.disclaimer || "This AI system is intended for screening/research assistance and does not replace professional ophthalmological diagnosis.";
+                    document.getElementById("xaiNote").innerText = data.xai_note || "Highlighted regions indicate areas that contributed most to the model prediction. Grad-CAM does not prove a medical diagnosis.";
+
+                    const quality = data.image_quality;
+                    document.getElementById("iqaStatus").innerText = quality?.acceptable ? "✔ Acceptable for Analysis" : "✖ Insufficient for Reliable Screening";
+                    document.getElementById("iqaScore").innerText = quality ? `Clarity: ${quality.blur_score.toFixed(1)} | Brightness: ${quality.brightness.toFixed(1)} | Retinal area: ${quality.retinal_area.toFixed(2)}` : data.iqa_metric || "--";
 
                     if (data.clahe_image) document.getElementById("imgFig2").src = data.clahe_image;
                     if (data.heatmap_image) document.getElementById("imgFig3").src = data.heatmap_image;
