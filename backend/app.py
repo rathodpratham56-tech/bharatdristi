@@ -20,10 +20,13 @@ except ImportError:
 
 
 app = FastAPI(title="BharatDrishti Clinical AI Engine")
+
+configured_origins = os.getenv("CORS_ORIGINS") or os.getenv("VERCEL_FRONTEND_URL")
+cors_origins = [origin.strip().rstrip("/") for origin in configured_origins.split(",") if origin.strip()] if configured_origins else ["*"]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[origin.strip() for origin in os.getenv("CORS_ORIGINS", "*").split(",")],
-    allow_credentials=True,
+    allow_origins=cors_origins,
+    allow_credentials=bool(configured_origins),
     allow_methods=["*"],
     allow_headers=["*"],
 )

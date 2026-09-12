@@ -55,4 +55,16 @@ These commands generate real results only after valid datasets and checkpoints a
 
 ## Deployment
 
-Vercel: set Root Directory to `frontend`, Framework Preset to `Other`, and leave build command blank. Deploy FastAPI separately and configure the frontend API URL at runtime. Set backend `CORS_ORIGINS` to the deployed frontend origin.
+The FastAPI entry point is `backend.app:app`. The repository root contains a `Procfile` with the production command:
+
+```text
+web: uvicorn backend.app:app --host 0.0.0.0 --port $PORT
+```
+
+For Render, Railway, or another Procfile-compatible host, use that command as the start command. Set the backend environment variable `CORS_ORIGINS` to the deployed Vercel URL, for example:
+
+```text
+CORS_ORIGINS=https://your-project.vercel.app
+```
+
+Multiple frontend origins may be comma-separated. `VERCEL_FRONTEND_URL` is also accepted for a single frontend origin. The model path is resolved relative to `backend/config.py`, so startup does not depend on the platform's working directory. The frontend remains a separate Vercel static deployment.

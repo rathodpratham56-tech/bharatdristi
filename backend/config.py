@@ -6,8 +6,8 @@ ROOT_DIR = Path(__file__).resolve().parent
 
 @dataclass(frozen=True)
 class Settings:
-    model_path: Path = ROOT_DIR / "bharatdrishti_resnet50_best.pth"
-    proposed_model_path: Path = ROOT_DIR / "bharatdrishti_resnet50_cbam_best.pth"
+    model_path: Path = (ROOT_DIR / "bharatdrishti_resnet50_best.pth").resolve()
+    proposed_model_path: Path = (ROOT_DIR / "bharatdrishti_resnet50_cbam_best.pth").resolve()
     input_size: int = 224
     num_classes: int = 5
     min_confidence: float = float(os.getenv("MIN_CONFIDENCE", "0.40"))
