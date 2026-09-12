@@ -1,0 +1,35 @@
+{
+  "project_status": "No dataset is bundled or downloaded. Values remain unavailable until verified from source metadata.",
+  "datasets": [
+    {
+      "name": "APTOS 2019 Blindness Detection",
+      "official_link": "https://www.kaggle.com/competitions/aptos2019-blindness-detection",
+      "access": "Competition access and current terms apply.",
+      "license": "Verify current Kaggle terms before redistribution or commercial use.",
+      "images": "not available",
+      "classes": "0-4 severity labels are described by the competition; local class counts are not available",
+      "images_per_class": "not available",
+      "class_distribution": "not available",
+      "format_resolution": "not available",
+      "patient_information": "not available",
+      "age_gender_ethnicity": "not available",
+      "device_conditions": "not available",
+      "split": "Generate locally; group by patient identifier when supplied."
+    },
+    {
+      "name": "EyePACS diabetic retinopathy dataset",
+      "official_link": "https://www.kaggle.com/c/diabetic-retinopathy-detection",
+      "access": "Competition access and current terms apply.",
+      "license": "Verify current Kaggle terms before use.",
+      "images": "not available",
+      "classes": "severity labels; local class counts are not available",
+      "images_per_class": "not available",
+      "class_distribution": "not available",
+      "format_resolution": "not available",
+      "patient_information": "not available",
+      "age_gender_ethnicity": "not available",
+      "device_conditions": "not available",
+      "split": "Generate locally; do not mix patient images across partitions."
+    }
+  ]
+}

@@ -98,6 +98,20 @@
                 Start Screening Portal ➔
             </button>
         </div>
+        <section class="max-w-5xl w-full mt-8 grid gap-4 md:grid-cols-3 text-left text-white">
+            <div class="bg-slate-950/75 backdrop-blur-md border border-cyan-500/30 rounded-2xl p-5">
+                <h2 class="text-sm font-black uppercase text-cyan-300">AI Methodology</h2>
+                <p class="text-xs text-slate-200 mt-2 leading-relaxed">Dataset → preprocessing → ResNet50 prediction → Grad-CAM explainability.</p>
+            </div>
+            <div class="bg-slate-950/75 backdrop-blur-md border border-cyan-500/30 rounded-2xl p-5">
+                <h2 class="text-sm font-black uppercase text-cyan-300">Dataset & Model Details</h2>
+                <p class="text-xs text-slate-200 mt-2 leading-relaxed">Source: not available. Images: not available. Classes and distribution: not available. Proposed variant: ResNet50 + CBAM, pending training.</p>
+            </div>
+            <div class="bg-slate-950/75 backdrop-blur-md border border-cyan-500/30 rounded-2xl p-5">
+                <h2 class="text-sm font-black uppercase text-cyan-300">Screening Scope</h2>
+                <p class="text-xs text-slate-200 mt-2 leading-relaxed">For screening and research assistance only. Results require professional ophthalmological review.</p>
+            </div>
+        </section>
         <p class="text-cyan-200 font-bold text-[11px] mt-6 drop-shadow">Smart India Hackathon (SIH) 2026 Prototype</p>
     </div>
 
@@ -323,7 +337,16 @@
                             <li>• Screening Recommendation: <span id="resRec" class="font-normal">--</span></li>
                             <li>• Referral Guidance: <span id="resRef" class="font-normal">--</span></li>
                         </ul>
+                        <div class="bg-cyan-50 border border-cyan-300 text-slate-800 p-2.5 rounded font-medium">
+                            Screening interpretation: <span id="screeningInterpretation">--</span>
+                        </div>
                     </div>
+                </div>
+
+                <div class="p-3.5 border-2 border-cyan-700 bg-cyan-50 text-slate-800 text-xs space-y-1">
+                    <p><strong>Model:</strong> <span id="modelVariant">--</span></p>
+                    <p><strong>Preprocessing:</strong> <span id="preprocessingSummary">--</span></p>
+                    <p><strong>Medical disclaimer:</strong> <span id="medicalDisclaimer">This AI system is intended for screening/research assistance and does not replace professional ophthalmological diagnosis.</span></p>
                 </div>
 
                 <!-- Page 1 Footer -->
@@ -391,7 +414,11 @@
                     </div>
 
                     <div class="p-3.5 bg-slate-100 border border-slate-400 rounded-xl text-[10px] text-slate-700 font-medium leading-relaxed">
-                        <strong>Clinical Note on XAI Visualization:</strong> The Grad-CAM heatmap (Fig 3) highlights active lesion regions (microaneurysms, hemorrhages, and exudates) contributing to severity grading. Red/Yellow zones indicate high neural network attention.
+                        <strong>Grad-CAM explanation:</strong> <span id="xaiNote">Highlighted regions indicate areas that contributed most to the model prediction. Grad-CAM does not prove a medical diagnosis.</span>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-100 border border-slate-400 rounded-xl text-[10px] text-slate-700 font-medium leading-relaxed">
+                        <strong>Clinical Note on XAI Visualization:</strong> The Grad-CAM heatmap shows regions that contributed to the model prediction. Red/Yellow zones indicate higher model attribution; this visualization does not prove a diagnosis or lesion location.
                     </div>
                 </div>
 
@@ -430,7 +457,8 @@
     <!-- JAVASCRIPT WORKFLOW CONTROLLER -->
     <!-- ========================================================= -->
     <script>
-        const API_BASE_URL = "http://127.0.0.1:8000";
+        const queryApiUrl = new URLSearchParams(window.location.search).get("api");
+        const API_BASE_URL = queryApiUrl || window.__BHARATDRISHTI_API_URL__ || window.location.origin;
         let selectedFile = null;
 
         const nationwideHospitalDatabase = {
@@ -543,7 +571,7 @@
             const formData = new FormData();
             formData.append("file", selectedFile);
             setLoadingState(true);
-            showStatus("Running ResNet50 inference, IQA check, CLAHE & Grad-CAM...", "info");
+            showStatus("Running image quality check, preprocessing, model inference & Grad-CAM...", "info");
 
             try {
                 const response = await fetch(`${API_BASE_URL}/analyze-fundus`, {
@@ -580,6 +608,14 @@
                     document.getElementById("resLesions").innerText = data.prediction?.detected_lesions || "--";
                     document.getElementById("resRec").innerText = data.prediction?.recommendation || "--";
                     document.getElementById("resRef").innerText = data.prediction?.referral || "--";
+                    document.getElementById("screeningInterpretation").innerText = data.prediction?.screening_interpretation || "--";
+                    document.getElementById("modelVariant").innerText = data.model?.name || "--";
+                    document.getElementById("preprocessingSummary").innerText = data.preprocessing?.operations?.join(" → ") || "--";
+                    document.getElementById("medicalDisclaimer").innerText = data.disclaimer || "This AI system is intended for screening/research assistance and does not replace professional ophthalmological diagnosis.";
+                    document.getElementById("xaiNote").innerText = data.xai_note || "Highlighted regions indicate areas that contributed most to the model prediction. Grad-CAM does not prove a medical diagnosis.";
+                    const quality = data.image_quality;
+                    document.getElementById("iqaStatus").innerText = quality?.acceptable ? "✔ Acceptable for Analysis" : "✖ Insufficient for Reliable Screening";
+                    document.getElementById("iqaScore").innerText = quality ? `Clarity: ${quality.blur_score.toFixed(1)} | Brightness: ${quality.brightness.toFixed(1)} | Retinal area: ${quality.retinal_area.toFixed(2)}` : data.iqa_metric || "--";
                     if (data.clahe_image) document.getElementById("imgFig2").src = data.clahe_image;
                     if (data.heatmap_image) document.getElementById("imgFig3").src = data.heatmap_image;
 
