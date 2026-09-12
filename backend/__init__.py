@@ -1,1 +1,0 @@
-"""BharatDrishti backend package."""
